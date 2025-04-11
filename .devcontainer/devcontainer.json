@@ -1,4 +1,6 @@
 {
+    // file: .devcontainer/devcontainer.json
+    // This file is used to configure the devcontainer for the project.
     // we are using devcontainers read about it: https://code.visualstudio.com/docs/devcontainers/containers
     // or watch this video intro: https://www.youtube.com/watch?v=b1RavPr_878&t=38s
     // NEWER edit this file. It is the same for all projects. Extend in the .devcontainer.extend folder
@@ -44,7 +46,8 @@
     "remoteEnv": {
         "DOCKER_HOST": "/var/run/docker.sock",
         "DOCKER_HOST_URI": "/var/run/docker.sock",
-        "PODMAN_SOCKET": "/var/run/docker.sock"
+        "PODMAN_SOCKET": "/var/run/docker.sock",
+        "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
     },
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached"
