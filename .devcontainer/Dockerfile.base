@@ -38,6 +38,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 # - traceroute: Used to trace the route packets take to a network host, useful for network diagnostics.
 # - jc: Converts command-line tool output to JSON for easier parsing.
 # - xdg-utils: Contains utilities like `xdg-open` to open URLs or files, enabling users to click links in the container.
+# - git: Version control system for managing code repositories.
+# - curl: Command-line tool for transferring data with URLs, useful for downloading files or APIs.
+# - wget: Command-line utility for downloading files from the web.
+# - zip: Utility for creating zip archives, useful for packaging files.
+# - unzip: Utility for extracting files from zip archives.
+# - gh: GitHub CLI for managing GitHub repositories and issues from the command line.
 
 
 # Install packages - Note that sudo is already configured in the base image for vscode user
@@ -53,7 +59,8 @@ RUN sudo apt-get update && \
         curl \
         wget \
         zip \
-        unzip && \
+        unzip \
+        gh && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
