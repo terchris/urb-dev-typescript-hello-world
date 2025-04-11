@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Added from template typescript-basic-webserver
+dist/
+.DS_Store
+
+# Added from template typescript-basic-webserver

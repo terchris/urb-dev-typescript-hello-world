@@ -1,0 +1,45 @@
+# Kubernetes deployment configuration for the typescript web application
+# Template variables:
+# terchris - Will be replaced with the GitHub username from the repository URL
+# urb-dev-typescript-hello-world - Will be replaced with the actual repository name
+#
+# This file is automatically configured during project initialization
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typescript-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: typescript-web
+  template:
+    metadata:
+      labels:
+        app: typescript-web
+    spec:
+      containers:
+        - name: typescript-web
+          image: ghcr.io/terchris/urb-dev-typescript-hello-world:latest
+          ports:
+            - containerPort: 3000
+          # minimal resources as this is just a test            
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: typescript-web
+spec:
+  selector:
+    app: typescript-web
+  ports:
+    - port: 80
+      targetPort: 3000
