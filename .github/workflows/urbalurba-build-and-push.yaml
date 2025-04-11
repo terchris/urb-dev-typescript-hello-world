@@ -1,6 +1,6 @@
 # filename: typescript-basic-webserver/.github/workflows/urbalurba-build-and-push.yaml
 # GitHub Actions workflow for building and pushing the Docker image
-#
+# 
 # Template variables:
 # terchris - Will be replaced with the GitHub username from the repository URL
 # urb-dev-typescript-hello-world - Will be replaced with the actual repository name
@@ -46,7 +46,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+          
       - name: Build and push Docker image
         run: |
           docker build -t ghcr.io/terchris/urb-dev-typescript-hello-world:latest .

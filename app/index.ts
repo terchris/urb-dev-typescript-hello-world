@@ -10,8 +10,21 @@ import express from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
 
+// get the current time
+const currentTime = new Date().toLocaleString();
+// format the currenttime to a string " Time: HH:mm:ss Date: dd/mm/yyyy"
+const timeDateString = new Date().toLocaleString('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+}).replace(',', '').replace(/(\d{2}:.*) (\d{2}\/.*)/,'Time: $1 Date: $2');
+
 app.get('/', (_, res) => {
-  res.send('Hello world from typescript-basic-webserver');
+  res.send('Hello world ! Template: typescript-basic-webserver. ' +
+    'Time is: ' + timeDateString) 
 });
 
 app.listen(port, () => {
