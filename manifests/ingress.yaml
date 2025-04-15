@@ -1,0 +1,35 @@
+# filename: templates/typescript-basic-webserver/manifests/ingress.yaml
+# Kubernetes ingress configuration for the web application
+# Template variables:
+# terchris - Will be replaced with the GitHub username from the repository URL
+# urb-dev-typescript-hello-world - Will be replaced with the actual repository name
+#
+# This file is automatically configured during project initialization
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "urb-dev-typescript-hello-world-ingress"
+  labels:
+    app: "urb-dev-typescript-hello-world"
+    owner: "terchris"
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    # Enable TLS with self-signed certificate for local development
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+    - host: "urb-dev-typescript-hello-world.local"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "urb-dev-typescript-hello-world-service"
+                port:
+                  number: 80
+  # Configure TLS (optional for local development)
+  tls:
+    - hosts:
+        - "urb-dev-typescript-hello-world.local"

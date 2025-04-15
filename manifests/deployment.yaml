@@ -1,5 +1,5 @@
-# filename: typescript-basic-webserver/manifests/deployment.yaml
-# Kubernetes deployment configuration for the typescript web application
+# filename: templates/typescript-basic-webserver/manifests/deployment.yaml
+# Kubernetes deployment configuration for the web application
 # Template variables:
 # terchris - Will be replaced with the GitHub username from the repository URL
 # urb-dev-typescript-hello-world - Will be replaced with the actual repository name
@@ -9,19 +9,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: typescript-web
+  name: "urb-dev-typescript-hello-world-deployment"
+  labels:
+    app: "urb-dev-typescript-hello-world"
+    owner: "terchris"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: typescript-web
+      app: "urb-dev-typescript-hello-world"
   template:
     metadata:
       labels:
-        app: typescript-web
+        app: "urb-dev-typescript-hello-world"
     spec:
       containers:
-        - name: typescript-web
+        - name: "urb-dev-typescript-hello-world"
           image: ghcr.io/terchris/urb-dev-typescript-hello-world:latest
           ports:
             - containerPort: 3000
@@ -37,10 +40,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: typescript-web
+  name: "urb-dev-typescript-hello-world-service"
 spec:
   selector:
-    app: typescript-web
+    app: "urb-dev-typescript-hello-world"
   ports:
     - port: 80
       targetPort: 3000
