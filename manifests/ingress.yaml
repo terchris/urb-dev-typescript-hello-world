@@ -19,7 +19,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
-    - host: "urb-dev-typescript-hello-world.local"
+    - host: "urb-dev-typescript-hello-world.localhost"
       http:
         paths:
           - path: /
@@ -32,4 +32,4 @@ spec:
   # Configure TLS (optional for local development)
   tls:
     - hosts:
-        - "urb-dev-typescript-hello-world.local"
+        - "urb-dev-typescript-hello-world.localhost"
