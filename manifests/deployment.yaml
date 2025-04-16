@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: "urb-dev-typescript-hello-world"
-          image: ghcr.io/terchris/urb-dev-typescript-hello-world:a5ec282-20250416150220
+          image: ghcr.io/terchris/urb-dev-typescript-hello-world:latest
           ports:
             - containerPort: 3000
           # minimal resources as this is just a test            
