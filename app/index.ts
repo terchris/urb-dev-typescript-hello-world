@@ -23,7 +23,7 @@ const timeDateString = new Date().toLocaleString('en-GB', {
 }).replace(',', '').replace(/(\d{2}:.*) (\d{2}\/.*)/,'Time: $1 Date: $2');
 
 app.get('/', (_, res) => {
-  res.send('Hello world Updated! Template: typescript-basic-webserver. ' +
+  res.send('Hello world God påske! Template: typescript-basic-webserver. ' +
     'Time is: ' + timeDateString) 
 });
 
