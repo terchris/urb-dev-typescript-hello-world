@@ -90,3 +90,4 @@ fi
 
 print_success "Removal process completed."
 print_info "If you want to recreate the application, run ./urbalurba-scripts/register-argocd.sh"
+
