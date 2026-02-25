@@ -1,44 +1,16 @@
-# filename: templates/typescript-basic-webserver/manifests/ingress.yaml
-# Kubernetes ingress configuration for the web application
-#
-# This template has been updated to work properly with Traefik in the Urbalurba environment
-# based on learnings from ArgoCD deployment patterns.
-#
-# Key changes:
-# 1. Changed domain suffix from .local to .localhost for Traefik compatibility
-# 2. Added explicit ingressClassName: "traefik" in spec
-# 3. Added traefik.ingress.kubernetes.io/router.entrypoints: "web" annotation
-# 4. Changed TLS configuration to an empty array for development environments
-#
-# Template variables:
-# terchris - Will be replaced with the GitHub username from the repository URL
-# urb-dev-typescript-hello-world - Will be replaced with the actual repository name
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
-  name: "urb-dev-typescript-hello-world-ingress"
+  name: "urb-dev-typescript-hello-world-ingressroute"
   labels:
     app: "urb-dev-typescript-hello-world"
     owner: "terchris"
-  annotations:
-    kubernetes.io/ingress.class: "traefik"  # Legacy annotation for compatibility
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"  # Explicitly use HTTP entrypoint
-    # Optional TLS configuration - disabled for local development
-    # traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
-  ingressClassName: "traefik"  # Explicit ingressClass reference (required for newer Kubernetes)
-  rules:
-    - host: "urb-dev-typescript-hello-world.localhost"  # Using .localhost domain for Traefik compatibility
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: "urb-dev-typescript-hello-world-service"
-                port:
-                  number: 80
-  # Empty TLS array instead of null to prevent default values
-  # This is a specific requirement for certain Traefik implementations
-  tls: []
+  entryPoints:
+    - web
+  routes:
+    - match: HostRegexp(`urb-dev-typescript-hello-world\..+`)
+      kind: Rule
+      services:
+        - name: "urb-dev-typescript-hello-world-service"
+          port: 80
