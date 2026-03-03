@@ -1,24 +1,17 @@
 {
-    // file: .devcontainer/devcontainer.json
-    // This file is used to configure the devcontainer for the project.
-    // we are using devcontainers read about it: https://code.visualstudio.com/docs/devcontainers/containers
-    // or watch this video intro: https://www.youtube.com/watch?v=b1RavPr_878&t=38s
-    // NEWER edit this file. It is the same for all projects. Extend in the .devcontainer.extend folder
-    "name": "DevContainer Toolbox",
-    "build": {
-        "dockerfile": "Dockerfile.base",
-        "args": {
-            "DEV_MAC_LOGNAME": "${localEnv:LOGNAME}",
-            "DEV_MAC_USER": "${localEnv:USER}",
-            "DEV_WIN_USERDNSDOMAIN": "${localEnv:USERDNSDOMAIN}",
-            "DEV_WIN_USERDOMAIN": "${localEnv:USERDOMAIN}",
-            "DEV_WIN_USERDOMAIN_ROAMINGPROFILE": "${localEnv:USERDOMAIN_ROAMINGPROFILE}",
-            "DEV_WIN_USERNAME": "${localEnv:USERNAME}",
-            "DEV_WIN_COMPUTERNAME": "${localEnv:COMPUTERNAME}",
-            "DEV_WIN_OS": "${localEnv:OS}"
-        }
-    },
-    // these are needed for setting up vpn in the container
+    // DevContainer Toolbox — image mode template for USER PROJECTS
+    // Docs: https://github.com/terchris/devcontainer-toolbox
+    //
+    // This file is the SINGLE SOURCE OF TRUTH for user project configuration.
+    // All install scripts and deployment tools download this file.
+    // Do NOT confuse with .devcontainer/devcontainer.json (toolbox development only).
+    //
+    // overrideCommand: false is REQUIRED so VS Code doesn't bypass the ENTRYPOINT.
+    // The entrypoint handles all startup — no lifecycle hooks needed.
+    "image": "ghcr.io/terchris/devcontainer-toolbox:latest",
+    "overrideCommand": false,
+
+    // VPN capabilities
     "runArgs": [
         "--cap-add=NET_ADMIN",
         "--cap-add=NET_RAW",
@@ -27,38 +20,30 @@
         "--device=/dev/net/tun:/dev/net/tun",
         "--privileged"
     ],
+
     "customizations": {
         "vscode": {
-            // by default we set up these extensions
             "extensions": [
-                "ms-vscode.azure-account",
-                "ms-vscode.azurecli",
-                "ms-vscode.powershell",
                 "yzhang.markdown-all-in-one",
-                "bierner.markdown-mermaid",
+                "MermaidChart.vscode-mermaid-chart",
                 "redhat.vscode-yaml",
-                "donjayamanne.githistory"
+                "mhutchie.git-graph",
+                "timonwong.shellcheck"
             ]
         }
     },
-    "remoteUser": "vscode",
-    "containerUser": "vscode",
+
     "remoteEnv": {
-        "DOCKER_HOST": "/var/run/docker.sock",
-        "DOCKER_HOST_URI": "/var/run/docker.sock",
-        "PODMAN_SOCKET": "/var/run/docker.sock",
-        "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+        "DCT_HOME": "/opt/devcontainer-toolbox",
+        "DCT_WORKSPACE": "/workspace"
     },
-    "mounts": [
-        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached"
-    ],
-    // your repo root will always be /workspace
+
     "workspaceFolder": "/workspace",
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-    // we stop the container when you exit vscode
+
+    "remoteUser": "vscode",
+    "containerUser": "vscode",
     "shutdownAction": "stopContainer",
     "updateRemoteUserUID": true,
-    "init": true,
-    // in this file you add project spessific installs.
-    "postCreateCommand": "if [ -f .devcontainer.extend/project-installs.sh ]; then bash .devcontainer.extend/project-installs.sh; fi"
+    "init": true
 }
